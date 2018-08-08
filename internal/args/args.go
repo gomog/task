@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/go-task/task/internal/taskfile"
+	"github.com/go-task/task/pkg/taskfile"
 )
 
 var (

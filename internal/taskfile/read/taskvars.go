@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/go-task/task/internal/taskfile"
+	"github.com/go-task/task/pkg/taskfile"
 
 	"gopkg.in/yaml.v2"
 )

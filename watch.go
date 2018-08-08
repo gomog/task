@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-task/task/internal/taskfile"
+	"github.com/go-task/task/pkg/taskfile"
 	"github.com/mattn/go-zglob"
 	"github.com/radovskyb/watcher"
 )

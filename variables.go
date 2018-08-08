@@ -3,8 +3,8 @@ package task
 import (
 	"path/filepath"
 
-	"github.com/go-task/task/internal/taskfile"
 	"github.com/go-task/task/internal/templater"
+	"github.com/go-task/task/pkg/taskfile"
 
 	"mvdan.cc/sh/shell"
 )

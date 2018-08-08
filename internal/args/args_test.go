@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/go-task/task/internal/args"
-	"github.com/go-task/task/internal/taskfile"
+	"github.com/go-task/task/pkg/taskfile"
 
 	"github.com/stretchr/testify/assert"
 )
