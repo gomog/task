@@ -13,9 +13,9 @@ import (
 	"github.com/go-task/task/internal/execext"
 	"github.com/go-task/task/internal/logger"
 	"github.com/go-task/task/internal/output"
-	"github.com/go-task/task/internal/taskfile/read"
-	"github.com/go-task/task/internal/taskfile/version"
 	"github.com/go-task/task/pkg/taskfile"
+	"github.com/go-task/task/pkg/taskfile/read"
+	"github.com/go-task/task/pkg/taskfile/version"
 
 	"github.com/Masterminds/semver"
 	"golang.org/x/sync/errgroup"
