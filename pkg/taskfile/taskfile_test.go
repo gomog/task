@@ -1,9 +1,9 @@
-package taskfile
+package taskfile_test
 
 import (
 	"testing"
 
-	"github.com/go-task/task/pkg"
+	"github.com/go-task/task/pkg/taskfile"
 
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v2"
@@ -27,28 +27,28 @@ vars:
 	}{
 		{
 			yamlCmd,
-			&pkg.Cmd{},
-			&pkg.Cmd{Cmd: `echo "a string command"`},
+			&taskfile.Cmd{},
+			&taskfile.Cmd{Cmd: `echo "a string command"`},
 		},
 		{
 			yamlTaskCall,
-			&pkg.Cmd{},
-			&pkg.Cmd{Task: "another-task", Vars: pkg.Vars{
-				"PARAM1": pkg.Var{Static: "VALUE1"},
-				"PARAM2": pkg.Var{Static: "VALUE2"},
+			&taskfile.Cmd{},
+			&taskfile.Cmd{Task: "another-task", Vars: taskfile.Vars{
+				"PARAM1": taskfile.Var{Static: "VALUE1"},
+				"PARAM2": taskfile.Var{Static: "VALUE2"},
 			}},
 		},
 		{
 			yamlDep,
-			&pkg.Dep{},
-			&pkg.Dep{Task: "task-name"},
+			&taskfile.Dep{},
+			&taskfile.Dep{Task: "task-name"},
 		},
 		{
 			yamlTaskCall,
-			&pkg.Dep{},
-			&pkg.Dep{Task: "another-task", Vars: pkg.Vars{
-				"PARAM1": pkg.Var{Static: "VALUE1"},
-				"PARAM2": pkg.Var{Static: "VALUE2"},
+			&taskfile.Dep{},
+			&taskfile.Dep{Task: "another-task", Vars: taskfile.Vars{
+				"PARAM1": taskfile.Var{Static: "VALUE1"},
+				"PARAM2": taskfile.Var{Static: "VALUE2"},
 			}},
 		},
 	}
