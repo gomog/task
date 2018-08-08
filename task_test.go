@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/go-task/task"
-	"github.com/go-task/task/internal/taskfile"
+	"github.com/go-task/task/pkg/taskfile"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
