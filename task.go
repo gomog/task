@@ -150,10 +150,14 @@ func (e *Executor) Setup() error {
 	return nil
 }
 
-func (e *Executor) AddVars(vars taskfile.Vars) {
+func (e *Executor) AddTaskVars(vars taskfile.Vars) {
 	for key, val := range vars {
 		e.taskvars[key] = val
 	}
+}
+
+func (e *Executor) GetTaskVars() taskfile.Vars {
+	return e.taskvars
 }
 
 // RunTask runs a task by its name
