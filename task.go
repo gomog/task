@@ -19,7 +19,6 @@ import (
 
 	"github.com/Masterminds/semver"
 	"golang.org/x/sync/errgroup"
-	"mvdan.cc/sh/interp"
 )
 
 const (
@@ -143,6 +142,21 @@ func (e *Executor) Setup() error {
 		return fmt.Errorf(`task: output option "%s" not recognized`, e.Taskfile.Output)
 	}
 
+	if !version.IsV21(v) {
+		err := fmt.Errorf(`task: Taskfile option "ignore_error" is only available starting on Taskfile version v2.1`)
+
+		for _, task := range e.Taskfile.Tasks {
+			if task.IgnoreError {
+				return err
+			}
+			for _, cmd := range task.Cmds {
+				if cmd.IgnoreError {
+					return err
+				}
+			}
+		}
+	}
+
 	e.taskCallCount = make(map[string]*int32, len(e.Taskfile.Tasks))
 	for k := range e.Taskfile.Tasks {
 		e.taskCallCount[k] = new(int32)
@@ -183,7 +197,7 @@ func (e *Executor) RunTask(ctx context.Context, call taskfile.Call) error {
 				e.Logger.VerboseErrf("task: error cleaning status on error: %v", err2)
 			}
 
-			if _, ok := err.(interp.ExitCode); ok && t.IgnoreError {
+			if execext.IsExitError(err) && t.IgnoreError {
 				e.Logger.VerboseErrf("task: task error ignored: %v", err)
 				continue
 			}
@@ -228,8 +242,7 @@ func (e *Executor) runCommand(ctx context.Context, t *taskfile.Task, call taskfi
 		defer stdOut.Close()
 		defer stdErr.Close()
 
-		err := execext.RunCommand(&execext.RunCommandOptions{
-			Context: ctx,
+		err := execext.RunCommand(ctx, &execext.RunCommandOptions{
 			Command: cmd.Cmd,
 			Dir:     t.Dir,
 			Env:     getEnviron(t),
@@ -237,7 +250,7 @@ func (e *Executor) runCommand(ctx context.Context, t *taskfile.Task, call taskfi
 			Stdout:  stdOut,
 			Stderr:  stdErr,
 		})
-		if _, ok := err.(interp.ExitCode); ok && cmd.IgnoreError {
+		if execext.IsExitError(err) && cmd.IgnoreError {
 			e.Logger.VerboseErrf("task: command error ignored: %v", err)
 			return nil
 		}
